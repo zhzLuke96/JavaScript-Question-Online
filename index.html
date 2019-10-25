@@ -17,20 +17,36 @@
 
 <body>
     <div id="app">
-        <div class="container h:100%">
-            <div class="row h:100% flex:center">
-                <div class="col:6 maincard">
+        <div class="container">
+            <div class="row">
+                <div class="col maincard">
                     <div class="cards shadow:sm no-b">
                         <div class="card bg:blue f-c:white">
                             JavaScript Question!
                             <span class="pull-right">
+                                <span id="reloadBtn" class="topbtn" title="clear cache">reload</span>
                                 <a href="https://github.com/zhzLuke96/JavaScript-Question-Online"
-                                    title="github:soucre code" target="_blank">
+                                    title="github:soucre code" target="_blank" class="topbtn">
                                     🐱
                                 </a>
                             </span>
                         </div>
                         <div class="card">
+                            <div class="row row-gap">
+                                <div class="col:4">
+                                    <div class="btn btn-yellow ripple btn-block t:upper f-f:coder f-c:black" id="upBtn">
+                                        👈 上一题
+                                    </div>
+                                </div>
+                                <div class="col:2">
+                                    <input type="text" id="gotoInp" placeholder="题号回车" style="width: 100%;">
+                                </div>
+                                <div class="col:4">
+                                    <div class="btn btn-green ripple btn-block t:upper f-f:coder" id="nxtBtn">下一题 👉
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
                             <h4>
                                 <span id="title">
                                     title
@@ -50,32 +66,20 @@
                                     选项
                                 </div>
                             </div>
+                            <div class="row row-gap">
+                                <div class="col:10">
+                                    <div class="btn btn-black ripple btn-block t:upper f-f:coder"
+                                        onclick="anssol.style.cssText='display:inline-block'">
+                                        查看答案及解析
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row" id="anssol">
                                 <div class="col:10" id="answer">
                                     答案
                                 </div>
                                 <div class="col:10" id="solution">
                                     解析
-                                </div>
-                            </div>
-                            <div class="row row-gap">
-                                <div class="col:10">
-                                    <div class="btn btn-black ripple btn-block t:upper f-f:coder"
-                                        onclick="anssol.style.cssText='display:inline-block'">查看答案及解析</div>
-                                </div>
-                                <div class="col:5">
-                                    <div class="btn btn-blue ripple btn-block t:upper f-f:coder" id="upBtn">👈 上一题</div>
-                                </div>
-                                <div class="col:5">
-                                    <div class="btn btn-green ripple btn-block t:upper f-f:coder" id="nxtBtn">下一题 👉
-                                    </div>
-                                </div>
-                                <div class="col:3">
-                                    <input type="text" id="gotoInp" placeholder="输入题号">
-                                </div>
-                                <div class="col:7">
-                                    <div class="btn btn-green ripple btn-block t:upper f-f:coder" id="gotoBtn">goto 👍
-                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -3,6 +3,7 @@ const codeRe = /(\S[\s\S]+)[？?]\s*?```\w+\s*?(\S[\s\S]+?)```\s*?(\S[\s\S]+?)</
 const contRe = /([^\n]+)\s*?(\S[\s\S]+)?<details><summary>/
 const optRe = /- \w+: /
 const mdFileURL = "https://raw.githubusercontent.com/lydiahallie/javascript-questions/master/zh-CN/README-zh_CN.md"
+const cache_key = "JavaScript-Question-Online"
 
 function parseContent(content) {
     let match;
@@ -25,6 +26,9 @@ function parseContent(content) {
 }
 
 async function getQuestions() {
+    if (cache = localStorage.getItem(cache_key)) {
+        return JSON.parse(cache)
+    }
     const quesRe = /###### (\d+)\. ([\s\S]+?)#### 答案: (\w)([\s\S]+?)<\/p>/g
     const res = await (await fetch(mdFileURL)).text()
     let ques = []
@@ -37,10 +41,12 @@ async function getQuestions() {
             solution: match[4].replace(/`([\s\S]+?)`/g, "<b>$1</b>")
         })
     }
-    return ques.map(v => ({
+    let ret = ques.map(v => ({
         ...v,
         ...parseContent(v.content)
     }))
+    localStorage.setItem(cache_key, JSON.stringify(ret))
+    return ret
 }
 
 function loadQues(que) {
@@ -84,12 +90,21 @@ function loadQues(que) {
         }
         loadQues(ques[index])
     }
+
+    function reload() {
+        localStorage.clear()
+        location.reload()
+    }
+
     nxtBtn.onclick = () => next()
     upBtn.onclick = () => pre()
-    gotoBtn.onclick = () => {
-        gotoQ(Number(gotoInp.value))
-        gotoInp.value = ""
+    gotoInp.onkeyup = ev => {
+        if (event.keyCode == 13) {
+            gotoQ(Number(gotoInp.value))
+            gotoInp.value = ""
+        }
     }
+    reloadBtn.onclick = () => reload()
 
     next()
 })()
